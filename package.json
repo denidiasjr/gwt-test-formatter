@@ -4,6 +4,9 @@
   "description": "Copy from GWT style BDD scenarios to Playwright test format.",
   "version": "0.0.1",
   "icon": "logo.png",
+  "repository": {
+    "url": "https://github.com/denidiasjr/gwt-test-formatter"
+  },
   "engines": {
     "vscode": "^1.108.0"
   },
