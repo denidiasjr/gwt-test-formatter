@@ -26,7 +26,7 @@ export const generateTests = (selectedText: string) => {
       testContent += `test.describe('${scenarioMatch} ${scenarioContentMatch}', () => {\n`;
     }
     if (givenMatch) {
-      testContent += `\ttest('${givenMatch} ${givenContentMatch}', () => {\n`;
+      testContent += `\ttest('${givenMatch} ${givenContentMatch}', async ({ page }) => {\n`;
     }
     if (stepMatch) {
       testContent += `\t\t// ${stepMatch} ${stepContentMatch}\n`;

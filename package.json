@@ -2,20 +2,22 @@
   "name": "gwt-test-formatter",
   "displayName": "GWT Test Formatter",
   "description": "Copy from GWT style BDD scenarios to Playwright test format.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "logo.png",
   "publisher": "denidiasjr",
   "repository": {
     "url": "https://github.com/denidiasjr/gwt-test-formatter"
   },
   "engines": {
-    "vscode": "^1.108.0"
+    "vscode": "^1.75.0"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:markdown"
+    "onLanguage:markdown",
+    "onLanguage:typescript",
+    "onLanguage:javascript"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -25,6 +27,11 @@
           "command": "gwt-test-formatter.generateTest",
           "when": "editor.hasSelection && editorLangId == markdown",
           "group": "navigation"
+        },
+        {
+          "command": "gwt-test-formatter.generateMarkdown",
+          "when": "editor.hasSelection && (editorLangId == typescript || editorLangId == javascript)",
+          "group": "navigation"
         }
       ]
     },
@@ -32,6 +39,24 @@
       {
         "command": "gwt-test-formatter.generateTest",
         "title": "Copy as GWT Test"
+      },
+      {
+        "command": "gwt-test-formatter.generateMarkdown",
+        "title": "Copy as GWT Markdown"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "gwt-test-formatter.generateTest",
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c",
+        "when": "editorTextFocus && editorHasSelection && editorLangId == markdown"
+      },
+      {
+        "command": "gwt-test-formatter.generateMarkdown",
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c",
+        "when": "editorTextFocus && editorHasSelection && (editorLangId == typescript || editorLangId == javascript)"
       }
     ]
   },
@@ -44,7 +69,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.108.0",
+    "@types/vscode": "^1.75.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
     "typescript-eslint": "^8.52.0",
