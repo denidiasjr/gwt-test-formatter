@@ -21,6 +21,31 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "GWT Test Formatter Configuration",
+      "properties": {
+        "gwtTestFormatter.testsFolder": {
+          "type": "string",
+          "default": "e2e/specs/",
+          "description": "Path to the test files."
+        },
+        "gwtTestFormatter.markdownsFolder": {
+          "type": "string",
+          "default": "docs/",
+          "description": "Path to the markdown files."
+        },
+        "gwtTestFormatter.testExtension": {
+          "type": "string",
+          "default": ".spec.ts",
+          "description": "Extension for generated test files."
+        },
+        "gwtTestFormatter.markdownExtension": {
+          "type": "string",
+          "default": ".doc.md",
+          "description": "Extension for generated markdown files."
+        }
+      }
+    },
     "menus": {
       "editor/context": [
         {
@@ -69,13 +94,14 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.75.0",
     "@types/mocha": "^10.0.10",
-    "@types/node": "22.x",
-    "typescript-eslint": "^8.52.0",
+    "@types/node": "^22.19.11",
+    "@types/vscode": "^1.75.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "diff": "^8.0.3",
     "eslint": "^9.39.2",
     "typescript": "^5.9.3",
-    "@vscode/test-cli": "^0.0.12",
-    "@vscode/test-electron": "^2.5.2"
+    "typescript-eslint": "^8.52.0"
   }
 }
