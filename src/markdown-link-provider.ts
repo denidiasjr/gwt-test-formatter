@@ -18,6 +18,10 @@ export class MarkdownLinkProvider implements vscode.DocumentLinkProvider {
     const config = vscode.workspace.getConfiguration("gwtTestFormatter");
     const testsFolder = config.get<string>("testsFolder", "e2e/specs");
     const markdownsFolder = config.get<string>("markdownsFolder", "docs/");
+    const enableMarkdownLinks = config.get<boolean>(
+      "enableMarkdownLinks",
+      true,
+    );
     const links: vscode.DocumentLink[] = [];
     const diagnostics: vscode.Diagnostic[] = [];
     const markdownLines: string[] = [];
@@ -26,7 +30,7 @@ export class MarkdownLinkProvider implements vscode.DocumentLinkProvider {
       .replace(markdownsFolder, testsFolder)
       .replace(".doc.md", ".spec.ts");
 
-    if (!workspaceFolder) {
+    if (!workspaceFolder || !enableMarkdownLinks) {
       return [];
     }
 

@@ -43,6 +43,11 @@
           "type": "string",
           "default": ".doc.md",
           "description": "Extension for generated markdown files."
+        },
+        "gwtTestFormatter.enableMarkdownLinks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable markdown links."
         }
       }
     },
@@ -63,11 +68,11 @@
     "commands": [
       {
         "command": "gwt-test-formatter.generateTest",
-        "title": "Copy as GWT Test"
+        "title": "GWT: Copy as Test"
       },
       {
         "command": "gwt-test-formatter.generateMarkdown",
-        "title": "Copy as GWT Markdown"
+        "title": "GWT: Copy as Markdown"
       }
     ],
     "keybindings": [
