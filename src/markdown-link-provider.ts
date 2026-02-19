@@ -47,22 +47,28 @@ export class MarkdownLinkProvider implements vscode.DocumentLinkProvider {
       markdownScenario.forEach((markdownStep) => {
         const currentLineIndex = markdownStep.line;
         const range = this.getLineRange(document, currentLineIndex);
-
-        const targetUri = vscode.Uri.joinPath(
-          workspaceFolder.uri,
-          testRelativePath,
-        ).with({
-          fragment: `L${testScenarios[markdownScenarioIndex]?.[currentTestLineIndex]?.line ?? 1}`,
-        });
-
-        links.push(new vscode.DocumentLink(range, targetUri));
-
-        if (
+        const hasMatchingStep =
           markdownStep.step ===
-          testScenarios[markdownScenarioIndex]?.[currentTestLineIndex]?.step
-        ) {
+          testScenarios[markdownScenarioIndex]?.[currentTestLineIndex]?.step;
+        let targetUri: vscode.Uri;
+
+        if (hasMatchingStep) {
+          targetUri = vscode.Uri.joinPath(
+            workspaceFolder.uri,
+            testRelativePath,
+          ).with({
+            fragment: `L${testScenarios[markdownScenarioIndex]?.[currentTestLineIndex]?.line ?? 1}`,
+          });
+
           currentTestLineIndex++;
         } else {
+          targetUri = vscode.Uri.joinPath(
+            workspaceFolder.uri,
+            testRelativePath,
+          ).with({
+            fragment: `L${testScenarios[markdownScenarioIndex]?.[currentTestLineIndex - 1]?.line ?? 1}`,
+          });
+
           const diagnostic = new vscode.Diagnostic(
             range,
             "This step is missing in the test file",
@@ -71,6 +77,8 @@ export class MarkdownLinkProvider implements vscode.DocumentLinkProvider {
           diagnostic.source = "GWT Test Formatter";
           diagnostics.push(diagnostic);
         }
+
+        links.push(new vscode.DocumentLink(range, targetUri));
       });
     });
 
