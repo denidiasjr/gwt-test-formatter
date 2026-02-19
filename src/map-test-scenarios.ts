@@ -26,8 +26,10 @@ export const mapTestScenarios = async (
 
   for await (const line of lineReader) {
     const scenarioMatch = SCENARIO_TESTS_REGEX.exec(line)?.[1];
+
     const [, givenMatch, givenContentMatch] =
       GIVEN_TESTS_REGEX.exec(line) ?? [];
+
     const [, stepMatch, stepContentMatch] = STEP_TESTS_REGEX.exec(line) ?? [];
 
     if (scenarioMatch) {
