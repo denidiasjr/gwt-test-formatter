@@ -41,15 +41,17 @@ export class MarkdownLinkProvider implements vscode.DocumentLinkProvider {
     const markdownScenarios = mapMarkdownScenarios(markdownLines);
     const testScenarios = await mapTestScenarios(testAbsolutePath);
 
-    markdownScenarios.forEach((markdownScenario, markdownScenarioIndex) => {
+    markdownScenarios.forEach((markdownScenario) => {
       let currentTestLineIndex = 0;
+      const testScenario = testScenarios.find(
+        (test) => test[0].step === markdownScenario[0].step,
+      );
 
       markdownScenario.forEach((markdownStep) => {
         const currentLineIndex = markdownStep.line;
         const range = this.getLineRange(document, currentLineIndex);
         const hasMatchingStep =
-          markdownStep.step ===
-          testScenarios[markdownScenarioIndex]?.[currentTestLineIndex]?.step;
+          markdownStep.step === testScenario?.[currentTestLineIndex]?.step;
         let targetUri: vscode.Uri;
 
         if (hasMatchingStep) {
@@ -57,7 +59,7 @@ export class MarkdownLinkProvider implements vscode.DocumentLinkProvider {
             workspaceFolder.uri,
             testRelativePath,
           ).with({
-            fragment: `L${testScenarios[markdownScenarioIndex]?.[currentTestLineIndex]?.line ?? 1}`,
+            fragment: `L${testScenario?.[currentTestLineIndex]?.line ?? 1}`,
           });
 
           currentTestLineIndex++;
@@ -66,7 +68,7 @@ export class MarkdownLinkProvider implements vscode.DocumentLinkProvider {
             workspaceFolder.uri,
             testRelativePath,
           ).with({
-            fragment: `L${testScenarios[markdownScenarioIndex]?.[currentTestLineIndex - 1]?.line ?? 1}`,
+            fragment: `L${testScenario?.[currentTestLineIndex - 1]?.line ?? 1}`,
           });
 
           const diagnostic = new vscode.Diagnostic(
